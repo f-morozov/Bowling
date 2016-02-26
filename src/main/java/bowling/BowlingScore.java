@@ -4,17 +4,6 @@ public class BowlingScore {
     final public static int numFrames = 10;
     final public static int maxPoints = 10;
 
-    public BowlingScore() {
-        score = 0;
-        hadStrike = false;
-        hadStrikeBefore = false;
-        hadSpare = false;
-        frameIndex = 0;
-        frameRollCount = 0;
-        frameScore = 0;
-        extraRolls = 0;
-    }
-
     public int getScore() {
         return score;
     }
@@ -73,12 +62,12 @@ public class BowlingScore {
             score += points;
     }
 
-    private int score;
-    private int frameIndex;
-    private int frameScore;
-    private int frameRollCount;
-    private boolean hadStrike;
-    private boolean hadStrikeBefore;
-    private boolean hadSpare;
-    private int extraRolls;
+    private int score = 0;
+    private int frameIndex = 0;
+    private int frameScore = 0;
+    private int frameRollCount = 0;
+    private boolean hadStrike = false;
+    private boolean hadStrikeBefore = false;
+    private boolean hadSpare = false;
+    private int extraRolls = 0;
 }
