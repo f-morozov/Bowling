@@ -65,7 +65,7 @@ public class BowlingScore {
         score += points;
         applyBonus(hadStrike, points);
         applyBonus(hadStrikeBefore, points);
-        applyBonus(hadSpare, points);
+        //applyBonus(hadSpare, points);
     }
 
     private void applyBonus(boolean hasBonus, int points) {
