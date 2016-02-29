@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BowlingScore</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">bowling</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BowlingScore (bowling)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BowlingScore</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (46/ 46)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package bowling;
+<i>2</i>&nbsp;
+<b class="fc"><i>3</i>&nbsp;public class BowlingScore {</b>
+<i>4</i>&nbsp;    final public static int numFrames = 10;
+<i>5</i>&nbsp;    final public static int maxPoints = 10;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;    public int getScore() {
+<b class="fc"><i>8</i>&nbsp;        return score;</b>
+<i>9</i>&nbsp;    }
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    public int getFrameIndex() {
+<b class="fc"><i>12</i>&nbsp;        return frameIndex;</b>
+<i>13</i>&nbsp;    }
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    public boolean addRoll(int points) {
+<b class="fc"><i>16</i>&nbsp;        if(points &lt; 0 || points + frameScore &gt; maxPoints)</b>
+<b class="fc"><i>17</i>&nbsp;            return false;</b>
+<b class="fc"><i>18</i>&nbsp;        if(frameIndex &gt;= numFrames)</b>
+<b class="fc"><i>19</i>&nbsp;            return false;</b>
+<i>20</i>&nbsp;
+<b class="fc"><i>21</i>&nbsp;        frameRollCount += 1;</b>
+<b class="fc"><i>22</i>&nbsp;        frameScore += points;</b>
+<b class="fc"><i>23</i>&nbsp;        addToScore(points);</b>
+<b class="fc"><i>24</i>&nbsp;        updateBonuses(points);</b>
+<b class="fc"><i>25</i>&nbsp;        if(frameIndex == numFrames - 1)</b>
+<b class="fc"><i>26</i>&nbsp;            handleLastFrame();</b>
+<b class="fc"><i>27</i>&nbsp;        if(frameRollCount == 2 + extraRolls || hadStrike)</b>
+<b class="fc"><i>28</i>&nbsp;            startNextFrame();</b>
+<b class="fc"><i>29</i>&nbsp;        return true;</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    private void startNextFrame() {
+<b class="fc"><i>33</i>&nbsp;        frameIndex += 1;</b>
+<b class="fc"><i>34</i>&nbsp;        frameRollCount = 0;</b>
+<b class="fc"><i>35</i>&nbsp;        frameScore = 0;</b>
+<b class="fc"><i>36</i>&nbsp;    }</b>
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    private void handleLastFrame() {
+<b class="fc"><i>39</i>&nbsp;        if(hadStrike || hadSpare) {</b>
+<b class="fc"><i>40</i>&nbsp;            if(extraRolls == 0)</b>
+<b class="fc"><i>41</i>&nbsp;                extraRolls = 1;</b>
+<b class="fc"><i>42</i>&nbsp;            hadStrike = hadSpare = false;</b>
+<b class="fc"><i>43</i>&nbsp;            frameScore = 0;</b>
+<i>44</i>&nbsp;        }
+<b class="fc"><i>45</i>&nbsp;    }</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    private void updateBonuses(int points) {
+<b class="fc"><i>48</i>&nbsp;        hadStrikeBefore = hadStrike;</b>
+<b class="fc"><i>49</i>&nbsp;        hadStrike = (frameRollCount == 1 &amp;&amp; points == maxPoints);</b>
+<b class="fc"><i>50</i>&nbsp;        hadSpare = (frameRollCount == 2 &amp;&amp; frameScore == maxPoints);</b>
+<b class="fc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    private void addToScore(int points) {
+<b class="fc"><i>54</i>&nbsp;        score += points;</b>
+<b class="fc"><i>55</i>&nbsp;        applyBonus(hadStrike, points);</b>
+<b class="fc"><i>56</i>&nbsp;        applyBonus(hadStrikeBefore, points);</b>
+<b class="fc"><i>57</i>&nbsp;        applyBonus(hadSpare, points);</b>
+<b class="fc"><i>58</i>&nbsp;    }</b>
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    private void applyBonus(boolean hasBonus, int points) {
+<b class="fc"><i>61</i>&nbsp;        if(hasBonus)</b>
+<b class="fc"><i>62</i>&nbsp;            score += points;</b>
+<b class="fc"><i>63</i>&nbsp;    }</b>
+<i>64</i>&nbsp;
+<b class="fc"><i>65</i>&nbsp;    private int score = 0;</b>
+<b class="fc"><i>66</i>&nbsp;    private int frameIndex = 0;</b>
+<b class="fc"><i>67</i>&nbsp;    private int frameScore = 0;</b>
+<b class="fc"><i>68</i>&nbsp;    private int frameRollCount = 0;</b>
+<b class="fc"><i>69</i>&nbsp;    private boolean hadStrike = false;</b>
+<b class="fc"><i>70</i>&nbsp;    private boolean hadStrikeBefore = false;</b>
+<b class="fc"><i>71</i>&nbsp;    private boolean hadSpare = false;</b>
+<b class="fc"><i>72</i>&nbsp;    private int extraRolls = 0;</b>
+<i>73</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-02-29 09:08</div>
+</div>
+</body>
+</html>
